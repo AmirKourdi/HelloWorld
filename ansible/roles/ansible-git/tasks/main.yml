@@ -1,0 +1,18 @@
+---
+- name: git add all new files
+  shell: git add -A
+  args:
+    chdir: ".."
+
+- name: git commit
+  shell: git commit -a -m "'{{ git_msg }}'"
+  args:
+    chdir: ".."
+  ignore_errors: true
+
+- name: git push
+  shell: git push --force
+  args:
+    chdir: ".."
+  environment:
+    GIT_SSH: "~/.ssh/"
