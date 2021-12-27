@@ -64,7 +64,7 @@ resource "aws_instance" "web" {
   subnet_id     = "subnet-05a5de4bc5ee448ec"
     
   # Use instance user_data to serve the custom website
-  user_data              = "${file("/Users/akourdi/HelloWorld/HelloWorld/terraform/modules/aws-assignment-deployment/template/user_data.sh")}"
+  user_data              = "${file("/Users/akourdi/HelloWorld/terraform/modules/aws-assignment-deployment/template/user_data.sh")}"
 
   # Attach the web server security group
   vpc_security_group_ids = ["${aws_security_group.web_sg.id}"]
