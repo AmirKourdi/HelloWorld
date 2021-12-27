@@ -1,0 +1,9 @@
+---
+- hosts: "all"
+  roles:
+    - role: web_welcome_message
+      tags:
+        - role-web-welcome-message
+    - role: ansible-git
+      tags:
+        - role-web-welcome-message

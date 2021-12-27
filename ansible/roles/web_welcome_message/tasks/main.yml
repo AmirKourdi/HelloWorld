@@ -1,0 +1,19 @@
+---
+- name: Modify index.html content
+  become: yes
+  template:
+    src: templates/var/www/html/index.html.j2
+    dest: "/var/www/html/index.html.j2"
+    owner: "root"
+    group: "root"
+    mode: 0600
+  register: web_conf
+  tags:
+    - web_conf
+
+- name: Restart apache2 service
+  service:
+    name: apache2
+    state: restarted
+  tags:
+    - web_conf
