@@ -14,5 +14,3 @@
   shell: git push --force
   args:
     chdir: ".."
-  environment:
-    GIT_SSH: "~/.ssh/"
