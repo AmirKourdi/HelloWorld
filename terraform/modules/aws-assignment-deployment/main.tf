@@ -43,7 +43,7 @@ resource "aws_security_group" "web_sg" {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    security_groups = ["${aws_security_group.elb_sg.id}"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   # Allow all outbound traffic
@@ -64,21 +64,22 @@ resource "aws_instance" "web" {
   subnet_id     = "subnet-05a5de4bc5ee448ec"
     
   # Use instance user_data to serve the custom website
-  user_data              = "${file("/Users/akourdi/HelloWorld/terraform/modules/aws-assignment-deployment/template/user_data.sh")}"
+  user_data              = "${file("/Users/akourdi/HelloWorld/HelloWorld/terraform/modules/aws-assignment-deployment/template/user_data.sh")}"
 
   # Attach the web server security group
-  vpc_security_group_ids = ["sg-07237c0a50375413d","sg-07237c0a50375413d"]
+  vpc_security_group_ids = ["${aws_security_group.web_sg.id}"]
   key_name = "akourdi"
 
   tags = {
     Name: "Web Server ${count.index + 1}"
+    Candidate: "AmirKourdi"
   }
 }
 
 resource "aws_elb" "web" {
   name = "web-elb"
   subnets = ["subnet-05a5de4bc5ee448ec","subnet-05a5de4bc5ee448ec"]
-  security_groups = ["sg-07237c0a50375413d","sg-07237c0a50375413d"]
+  security_groups = ["${aws_security_group.elb_sg.id}"]
   instances = "${aws_instance.web.*.id}"
 
 
@@ -88,6 +89,13 @@ resource "aws_elb" "web" {
     instance_protocol = "http"
     lb_port           = 80
     lb_protocol       = "http"
+  }
+
+  listener {
+    instance_port     = 22
+    instance_protocol = "tcp"
+    lb_port           = 22
+    lb_protocol       = "tcp"
   }
 
   # Check instance health every 10 seconds
