@@ -1,1 +1,9 @@
-welcome_message: "Welcome, World"
+# Ansible AWS EC2 dynamic inventory plugin
+plugin: aws_ec2
+strict: True
+regions:
+  - eu-west-1
+#filters:
+#  instance-state-name: running
+#  tag:AmsCustomer: ams
+#  tag:AmsEnv: stage

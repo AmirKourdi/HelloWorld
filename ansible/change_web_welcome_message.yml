@@ -4,6 +4,9 @@
     - role: web_welcome_message
       tags:
         - role-web-welcome-message
+  
+- hosts: "localhost"
+  roles:
     - role: ansible-git
       tags:
         - role-web-welcome-message
